@@ -69,8 +69,8 @@ var TouchableOpacity = React.createClass({
 
   getDefaultProps: function() {
     return {
-      activeOpacity: 0.2,
-      focusedOpacity: 0.7,
+      activeOpacity: 1.0,
+      focusedOpacity: 1.0,
     };
   },
 
@@ -165,7 +165,7 @@ var TouchableOpacity = React.createClass({
   _opacityFocused: function() {
     this.setOpacityTo(this.props.focusedOpacity);
   },
-  
+
   _getChildStyleOpacityWithDefault: function() {
    var childStyle = flattenStyle(this.props.style) || {};
    return childStyle.opacity == undefined ? 1 : childStyle.opacity;

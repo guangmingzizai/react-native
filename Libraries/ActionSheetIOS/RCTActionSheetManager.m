@@ -99,11 +99,19 @@ RCT_EXPORT_METHOD(showActionSheetWithOptions:(NSDictionary *)options
     }
 
     NSInteger localIndex = index;
-    [alertController addAction:[UIAlertAction actionWithTitle:option
-                                                        style:style
-                                                      handler:^(__unused UIAlertAction *action){
-      callback(@[@(localIndex)]);
-    }]];
+    UIAlertAction *alertAction =
+    [UIAlertAction actionWithTitle:option
+                             style:style
+                           handler:^(__unused UIAlertAction *action){
+                             callback(@[@(localIndex)]);
+                           }];
+    if (index != cancelButtonIndex) {
+      @try {
+        [alertAction setValue:[UIColor colorWithRed:1.0 green:79.0/255.0 blue:102.0/255.0 alpha:1.0] forKey:@"titleTextColor"];
+      } @catch (NSException *exception) {
+      }
+    }
+    [alertController addAction:alertAction];
 
     index++;
   }

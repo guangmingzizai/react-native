@@ -464,8 +464,8 @@ dispatch_queue_t RCTGetUIManagerQueue(void)
     RCTShadowView *shadowView = self->_shadowViewRegistry[reactTag];
     RCTAssert(shadowView != nil, @"Could not locate root view with tag #%@", reactTag);
     shadowView.backgroundColor = color;
-    [self _amendPendingUIBlocksWithStylePropagationUpdateForShadowView:shadowView];
-    [self flushUIBlocks];
+    // [self _amendPendingUIBlocksWithStylePropagationUpdateForShadowView:shadowView];
+    // [self flushUIBlocks];
   });
 }
 

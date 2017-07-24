@@ -173,11 +173,25 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 - (void)layoutSubviews
 {
   [super layoutSubviews];
-  _contentView.frame = self.bounds;
-  _loadingView.center = (CGPoint){
-    CGRectGetMidX(self.bounds),
-    CGRectGetMidY(self.bounds)
-  };
+
+  if (self.reactViewController.tabBarController == nil ||
+      self.reactViewController.hidesBottomBarWhenPushed == YES ||
+      CGRectEqualToRect(_contentView.frame, CGRectZero)
+    ) {
+    _contentView.frame = self.bounds;
+    _loadingView.center = (CGPoint){
+      CGRectGetMidX(self.bounds),
+      CGRectGetMidY(self.bounds)
+    };
+  } else {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      self->_contentView.frame = self.bounds;
+      self->_loadingView.center = (CGPoint){
+        CGRectGetMidX(self.bounds),
+        CGRectGetMidY(self.bounds)
+      };
+    });
+  }
 }
 
 - (UIViewController *)reactViewController

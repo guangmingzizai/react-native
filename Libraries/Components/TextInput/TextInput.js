@@ -532,6 +532,11 @@ const TextInput = React.createClass({
      * If `true`, caret is hidden. The default value is `false`.
      */
     caretHidden: PropTypes.bool,
+
+    /**
+     * Whether focus on press. The default value is `true`.
+     */
+    shouldFocus: PropTypes.func,
   },
 
   /**
@@ -766,7 +771,9 @@ const TextInput = React.createClass({
 
   _onPress: function(event: Event) {
     if (this.props.editable || this.props.editable === undefined) {
-      this.focus();
+      if (!this.props.shouldFocus || this.props.shouldFocus()) {
+        this.focus();
+      }
     }
   },
 

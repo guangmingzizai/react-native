@@ -151,7 +151,8 @@ RCT_EXPORT_METHOD(alertWithArgs:(NSDictionary *)args
       buttonStyle = UIAlertActionStyleDestructive;
     }
     __weak UIAlertController *weakAlertController = alertController;
-    [alertController addAction:[UIAlertAction actionWithTitle:buttonTitle
+    UIAlertAction *alertAction =
+    [UIAlertAction actionWithTitle:buttonTitle
                                                         style:buttonStyle
                                                       handler:^(__unused UIAlertAction *action) {
       switch (type) {
@@ -171,7 +172,14 @@ RCT_EXPORT_METHOD(alertWithArgs:(NSDictionary *)args
           callback(@[buttonKey]);
           break;
       }
-    }]];
+    }];
+    if (![buttonKey isEqualToString:cancelButtonKey]) {
+      @try {
+        [alertAction setValue:[UIColor colorWithRed:1.0 green:79.0/255.0 blue:102.0/255.0 alpha:1.0] forKey:@"titleTextColor"];
+      } @catch (NSException *exception) {
+      }
+    }
+    [alertController addAction:alertAction];
   }
 
   if (!_alertControllers) {
